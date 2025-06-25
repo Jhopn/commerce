@@ -1,16 +1,22 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import Product from "@/data/products.json";
+import { useQuery } from "@tanstack/react-query";
+import { getProduct } from "../../api/product";
 
 const Details = () => {
   const { id } = useLocalSearchParams();
-  const product = Product.find((product) => product.id.toString() === id);
+
+  const { data: product, isLoading: loading, error } = useQuery({
+    queryKey: ['products', id],
+    queryFn: () => getProduct(id)
+  });
+
 
   return (
     <View>
-      <Stack.Screen name="details/[id]" options={{ title: product?.name }} />
-      <Image source={{ uri: product?.image }} style={styles.image} />
-      <Text>{product?.name}</Text>
+      <Stack.Screen name="details/[id]" options={{ title: product?.title }} />
+      <Image source={{ uri: product?.images[0] }} style={styles.image} />
+      <Text>{product?.title}</Text>
       <Text>{product?.price}</Text>
       <Text>{product?.description}</Text>
       <TouchableOpacity>

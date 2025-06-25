@@ -1,4 +1,4 @@
-[
+{ "products": [
   {
     "id": 1,
     "name": "AirPods Pro",
@@ -70,3 +70,4 @@
     "price": 2699.95
   }
 ]
+}

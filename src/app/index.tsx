@@ -1,21 +1,33 @@
-import Products from "@/data/products.json";
-import { View, FlatList } from "react-native";
-import ProductPaper from "./components/product-paper";
+import { View, FlatList, ActivityIndicator } from "react-native";
+import ProductPaper from "../components/product-paper";
 import { ProductDTO } from "@/dto/product-dto";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/api/product"
 
 interface Props {
   item: ProductDTO;
 }
 
 const Index = () => {
+  const { data: product, isLoading: loading, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: getProducts
+  });
+
+  if(loading){
+    return(
+      <ActivityIndicator size={"large"}/>
+    )
+  }
+
   return (
     <View>
       <FlatList
-        data={Products}
+        data={product}
         numColumns={2}
         contentContainerStyle={{
           gap: 1,
-          padding: 18
+          padding: 18,
         }}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: Props) => <ProductPaper data={item} />}

@@ -18,8 +18,8 @@ export default function ProductPaper({data}: Props){
 
   return ( 
     <Pressable onPress={handlePress} style={styles.container}>
-      <Image source={{ uri: data.image}} style={{width: 150, height: 280, objectFit: "scale-down"}}/>
-      <Text>{data.name}</Text>
+      <Image source={{ uri: data.images[0]}} style={{width: 150, height: 280, objectFit: "scale-down"}}/>
+      <Text>{data.title}</Text>
       <Text>{data.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</Text>
     </Pressable>
    );
